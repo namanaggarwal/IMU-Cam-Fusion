@@ -92,4 +92,4 @@ while(1):
 	print "Bearing: ",math.degrees(bearing)
 	print
 
-	imu.write(str(timestamp) + ", " str(accel_xout)+ ", "str(accel_yout)+ ", "str(accel_zout)+ ", "str(gyro_xout)+ ", "str(gyro_yout)+ ", "str(gyro_zout)+ ", "str(math.degrees(bearing)) + "\n")
+	imu.write(str(timestamp) + ", " + str(accel_xout) + ", " + str(accel_yout) + ", " + str(accel_zout)+ ", " + str(gyro_xout)+ ", " + str(gyro_yout)+ ", " + str(gyro_zout)+ ", " + str(math.degrees(bearing)) + "\n")
