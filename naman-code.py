@@ -51,7 +51,7 @@ bus.write_byte_data(address, power_mgmt_1, 0)
 
 t0 = time.time()
 imu.write("Computer Time: " + str(t0) + "\n")
-imu.write("Computer_Time (time_elapse_epoch), timestamp (Sec), ax,AccelX (m/s2), ay,AccelY (m/s2), az,AccelZ (m/s2), gx, GyroX (Rad/s), gy, GyroY (Rad/), gz, GyroZ Rad/s, MagX (Gauss), MagY(Gauss), MagZ (Gauss), Bearing\n")
+imu.write("Computer_Time (time_elapse_epoch), timestamp (sec), Image Number, camera_capture_time (sec), ax,AccelX (m/s2), ay,AccelY (m/s2), az,AccelZ (m/s2), gx, GyroX (Rad/s), gy, GyroY (Rad/), gz, GyroZ Rad/s, MagX (Gauss), MagY(Gauss), MagZ (Gauss), Bearing\n")
 
 #CAMERA CODE
 cv.NamedWindow("camera", 1)
@@ -103,9 +103,7 @@ while(1):
 	print "Bearing: ",math.degrees(bearing)
 	print
 
-	imu.write(str(ti) + ", " +str(timestamp) + ", " + str(accel_xout) + ", " + str(accel_xout/16384.) + ", " + str(accel_yout) + ", " + str(accel_yout/16384.) + ", " + str(accel_zout)+ ", " + str(accel_zout/16384.) + ", " 
-		+ str(gyro_xout)+ ", " + str(gyro_xout/131.)+ ", " + str(gyro_yout)+ ", " + str(gyro_yout/131.)+ ", " + str(gyro_zout)+ ", " + str(gyro_zout/131.)+ ", " 
-		+ str(x_out)+ ", " + str(y_out)+ ", " + str(z_out) + ", " + str(math.degrees(bearing)) + "\n")
+	
 # CAMERA CODE
 	ti_camera = time.time()
 	img = cv.QueryFrame(capture)
@@ -114,4 +112,9 @@ while(1):
 	camera.write("Image "+ str(i)+ ": " +  str(ti_camera - t0) + " s \n ")
 	if cv.WaitKey(1) == 27:
 		break
+
+	imu.write(str(ti) + ", " +str(timestamp) + ", " + str("Image " + str(i)) + "," + str(ti_camera - t0) + ","+ str(accel_xout) + ", " + str(accel_xout/16384.) + ", " + str(accel_yout) + ", " + str(accel_yout/16384.) + ", " + str(accel_zout)+ ", " + str(accel_zout/16384.) + ", " 
+		+ str(gyro_xout)+ ", " + str(gyro_xout/131.)+ ", " + str(gyro_yout)+ ", " + str(gyro_yout/131.)+ ", " + str(gyro_zout)+ ", " + str(gyro_zout/131.)+ ", " 
+		+ str(x_out)+ ", " + str(y_out)+ ", " + str(z_out) + ", " + str(math.degrees(bearing)) + "\n")
+
 	i=i+1
