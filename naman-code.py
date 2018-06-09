@@ -3,9 +3,15 @@
 import smbus
 import math
 import time
-import csv
+import cv2.cv as cv
+import os
+
+#PATH FOR STORING IMAGES# 
+#os.makedirs(~/Images)
+
 
 imu = open("imuData.txt","w+")
+camera = open("cameraData.txt", "w+")
 
 bus = smbus.SMBus(1)
 
@@ -47,7 +53,13 @@ t0 = time.time()
 imu.write("Computer Time: " + str(t0) + "\n")
 imu.write("Computer_Time (time_elapse_epoch), timestamp (Sec), ax,AccelX (m/s2), ay,AccelY (m/s2), az,AccelZ (m/s2), gx, GyroX (Rad/s), gy, GyroY (Rad/), gz, GyroZ Rad/s, MagX (Gauss), MagY(Gauss), MagZ (Gauss), Bearing\n")
 
+#CAMERA CODE
+cv.NamedWindow("camera", 1)
+capture = cv.CaptureFromCAM(0)
+
+i = 1
 while(1):
+# IMU CODE
 	ti = time.time()
 	timestamp = ti - t0
 	print "Time Stamp",ti-t0
@@ -94,3 +106,12 @@ while(1):
 	imu.write(str(ti) + ", " +str(timestamp) + ", " + str(accel_xout) + ", " + str(accel_xout/16384.) + ", " + str(accel_yout) + ", " + str(accel_yout/16384.) + ", " + str(accel_zout)+ ", " + str(accel_zout/16384.) + ", " 
 		+ str(gyro_xout)+ ", " + str(gyro_xout/131.)+ ", " + str(gyro_yout)+ ", " + str(gyro_yout/131.)+ ", " + str(gyro_zout)+ ", " + str(gyro_zout/131.)+ ", " 
 		+ str(x_out)+ ", " + str(y_out)+ ", " + str(z_out) + ", " + str(math.degrees(bearing)) + "\n")
+# CAMERA CODE
+	ti_camera = time.time()
+	img = cv.QueryFrame(capture)
+	cv.ShowImage("camera", img)
+	cv.SaveImage('pic{:>05}.jpg'.format(i), img)
+	camera.write("Image "+ str(i)+ ": " +  str(ti_camera - t0) + " s \n ")
+	if cv.WaitKey(1) == 27:
+		break
+	i=i+1
