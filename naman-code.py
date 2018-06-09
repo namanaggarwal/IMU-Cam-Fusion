@@ -6,7 +6,7 @@ import time
 import csv
 
 imu = open("imuData.txt","w+")
-imu.write(timestamp, ax, ay, az, gx, gy, gz, Bearing)
+imu.write("timestamp, ax, ay, az, gx, gy, gz, Bearing\n")
 
 bus = smbus.SMBus(1)
 
@@ -92,4 +92,4 @@ while(1):
 	print "Bearing: ",math.degrees(bearing)
 	print
 
-	imu.write(timestamp, accel_xout, accel_yout, accel_zout, gyro_xout, gyro_yout, gyro_zout, bearing)
+	imu.write("%f, %f, %f, %f, %f, %f, %f, %f \n" %timestamp, %accel_xout, %accel_yout, %accel_zout, %gyro_xout, %gyro_yout, %gyro_zout, %bearing)
