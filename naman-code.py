@@ -45,7 +45,7 @@ address = 0x68
 bus.write_byte_data(address, power_mgmt_1, 0)
 
 t0 = time.time()
-imu.write("Computer Time: " + str(t0))
+imu.write("Computer Time: " + str(t0) + "\n")
 
 while(1):
 	ti = time.time()
@@ -93,4 +93,4 @@ while(1):
 	print "Bearing: ",math.degrees(bearing)
 	print
 
-	imu.write(str(timestamp) + ", " + str(accel_xout) + ", " + str(accel_yout) + ", " + str(accel_zout)+ ", " + str(gyro_xout)+ ", " + str(gyro_yout)+ ", " + str(gyro_zout)+ ", " + str(math.degrees(bearing)) + "\n")
+	imu.write(str(ti) + ", " +str(timestamp) + ", " + str(accel_xout) + ", " + str(accel_yout) + ", " + str(accel_zout)+ ", " + str(gyro_xout)+ ", " + str(gyro_yout)+ ", " + str(gyro_zout)+ ", " + str(math.degrees(bearing)) + "\n")
