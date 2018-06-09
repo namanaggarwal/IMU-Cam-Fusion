@@ -6,7 +6,7 @@ import time
 import csv
 
 imu = open("imuData.txt","w+")
-imu.write("timestamp, ax, ay, az, gx, gy, gz, Bearing\n")
+imu.write("Computer_Time, timestamp, ax,AccelX, ay,AccelY, az,AccelZ, gx, GyroX, gy, GyroY, gz, GyroZ, MagX, MagY, MagZ, Bearing\n")
 
 bus = smbus.SMBus(1)
 
@@ -73,8 +73,6 @@ while(1):
 	accel_yout = read_word_2c(0x3d)
 	accel_zout = read_word_2c(0x3f)
 
-	
-
 	print "accel_xout: ", accel_xout, " scaled: ", 	(accel_xout/16384.)
 	print "accel_yout: ", accel_yout, " scaled: ", (accel_yout/16384.)
 	print "accel_zout: ", accel_zout, " scaled: ", (accel_zout/16384.)
@@ -93,4 +91,6 @@ while(1):
 	print "Bearing: ",math.degrees(bearing)
 	print
 
-	imu.write(str(ti) + ", " +str(timestamp) + ", " + str(accel_xout) + ", " + str(accel_yout) + ", " + str(accel_zout)+ ", " + str(gyro_xout)+ ", " + str(gyro_yout)+ ", " + str(gyro_zout)+ ", " + str(math.degrees(bearing)) + "\n")
+	imu.write(str(ti) + ", " +str(timestamp) + ", " + str(accel_xout) + ", " + str(accel_xout/16384.) + ", " + str(accel_yout) + ", " + str(accel_yout/16384.) + ", " + str(accel_zout)+ ", " + str(accel_zout/16384.) + ", " 
+		+ str(gyro_xout)+ ", " + str(gyro_xout/131.)+ ", " + str(gyro_yout)+ ", " + str(gyro_yout/131.)+ ", " + str(gyro_zout)+ ", " + str(gyro_zout/131.)+ ", " 
+		+ str(x_out)+ ", " + str(y_out)+ ", " + str(z_out) + ", " + str(math.degrees(bearing)) + "\n")
