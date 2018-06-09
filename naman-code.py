@@ -6,7 +6,6 @@ import time
 import csv
 
 imu = open("imuData.txt","w+")
-imu.write("Computer_Time, timestamp, ax,AccelX, ay,AccelY, az,AccelZ, gx, GyroX, gy, GyroY, gz, GyroZ, MagX, MagY, MagZ, Bearing\n")
 
 bus = smbus.SMBus(1)
 
@@ -46,6 +45,7 @@ bus.write_byte_data(address, power_mgmt_1, 0)
 
 t0 = time.time()
 imu.write("Computer Time: " + str(t0) + "\n")
+imu.write("Computer_Time (time_elapse_epoch), timestamp (Sec), ax,AccelX (m/s2), ay,AccelY (m/s2), az,AccelZ (m/s2), gx, GyroX (Rad/s), gy, GyroY (Rad/), gz, GyroZ Rad/s, MagX (Gauss), MagY(Gauss), MagZ (Gauss), Bearing\n")
 
 while(1):
 	ti = time.time()
