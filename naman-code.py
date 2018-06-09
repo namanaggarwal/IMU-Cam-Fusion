@@ -3,6 +3,10 @@
 import smbus
 import math
 import time
+import csv
+
+imu = open("imuData.txt","w+")
+imu.write(timestamp, ax, ay, az, gx, gy, gz, Bearing)
 
 bus = smbus.SMBus(1)
 
@@ -44,6 +48,7 @@ t0 = time.time()
  
 while(1):
 	ti = time.time()
+	timestamp = ti - t0
 	print "Time Stamp",ti-t0
 	print
 
@@ -86,3 +91,5 @@ while(1):
 		bearing += 2*math.pi
 	print "Bearing: ",math.degrees(bearing)
 	print
+
+	imu.write(timestamp, accel_xout, accel_yout, accel_zout, gyro_xout, gyro_yout, gyro_zout, bearing)
