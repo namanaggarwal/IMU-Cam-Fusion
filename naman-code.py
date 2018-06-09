@@ -45,7 +45,7 @@ address = 0x68
 bus.write_byte_data(address, power_mgmt_1, 0)
 
 t0 = time.time()
- 
+ imu.write("Computer Time: " + str(t0))
 while(1):
 	ti = time.time()
 	timestamp = ti - t0
