@@ -48,8 +48,8 @@ address = 0x68
 bus.write_byte_data(address, power_mgmt_1, 0)
 
 t0 = time.time()
-imu.write("Computer Time: " + str(t0) + "\n")
-imu.write("Computer_Time (time_elapse_epoch), timestamp (sec), Image Number, camera_capture_time (sec), ax,AccelX (m/s2), ay,AccelY (m/s2), az,AccelZ (m/s2), gx, GyroX (Rad/s), gy, GyroY (Rad/), gz, GyroZ Rad/s, MagX (Gauss), MagY(Gauss), MagZ (Gauss), Bearing\n")
+data_.write("Computer Time: " + str(t0) + "\n")
+data_.write("Computer_Time (time_elapse_epoch), timestamp (sec), Image Number, camera_capture_time (sec), ax,AccelX (m/s2), ay,AccelY (m/s2), az,AccelZ (m/s2), gx, GyroX (Rad/s), gy, GyroY (Rad/), gz, GyroZ Rad/s, MagX (Gauss), MagY(Gauss), MagZ (Gauss), Bearing\n")
 
 #CAMERA CODE
 cv.NamedWindow("camera", 1)
