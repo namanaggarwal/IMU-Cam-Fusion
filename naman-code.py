@@ -10,8 +10,7 @@ import os
 #os.makedirs(~/Images)
 
 
-imu = open("imuData.txt","w+")
-camera = open("cameraData.txt", "w+")
+data_ = open("Data.txt","w+")
 
 bus = smbus.SMBus(1)
 
@@ -38,9 +37,8 @@ address_ = 0x1e
 def write_byte(adr,value):
 	bus.write_byte_data(address_, adr, value)
 	
-write_byte(0,0b01110000)
-write_byte(1,0b01110000)
-write_byte(2,0b01110000)
+bus.write_byte_data(address_, 0x00, 0x60)
+bus.write_byte_data(0x1E, 0x02, 0x00)
 
 scale = 0.92
 ###################
@@ -93,11 +91,21 @@ while(1):
 	# print mag values
 	print"magnetometer data"
 	print"----------"
-	x_out = scale*read_word_2c(3)
-	y_out = scale*read_word_2c(7)
-	z_out = scale*read_word_2c(5)
+	data = bus.read_i2c_block_data(address_, 0x03, 6)
+	xMag = data[0] * 256. + data[1]
+	if xMag > 32767 :
+		xMag -= 65536
+
+	zMag = data[2] * 256. + data[3]
+	if zMag > 32767 :
+		zMag -= 65536
+
+	yMag = data[4] * 256. + data[5]
+	if yMag > 32767 :
+		yMag -= 65536
+
 	
-	bearing = math.atan2(y_out,x_out)
+	bearing = math.atan2(yMag,xMag)
 	if (bearing<0):
 		bearing += 2*math.pi
 	print "Bearing: ",math.degrees(bearing)
@@ -113,8 +121,8 @@ while(1):
 	if cv.WaitKey(1) == 27:
 		break
 
-	imu.write(str(ti) + ", " +str(timestamp) + ", " + str("Image " + str(i)) + "," + str(ti_camera - t0) + ","+ str(accel_xout) + ", " + str(accel_xout/16384.) + ", " + str(accel_yout) + ", " + str(accel_yout/16384.) + ", " + str(accel_zout)+ ", " + str(accel_zout/16384.) + ", " 
+	data_.write(str(ti) + ", " +str(timestamp) + ", " + str("Image " + str(i)) + "," + str(ti_camera - t0) + ","+ str(accel_xout) + ", " + str(accel_xout/16384.) + ", " + str(accel_yout) + ", " + str(accel_yout/16384.) + ", " + str(accel_zout)+ ", " + str(accel_zout/16384.) + ", " 
 		+ str(gyro_xout)+ ", " + str(gyro_xout/131.)+ ", " + str(gyro_yout)+ ", " + str(gyro_yout/131.)+ ", " + str(gyro_zout)+ ", " + str(gyro_zout/131.)+ ", " 
-		+ str(x_out)+ ", " + str(y_out)+ ", " + str(z_out) + ", " + str(math.degrees(bearing)) + "\n")
+		+ str(xMag)+ ", " + str(yMag)+ ", " + str(zMag) + ", " + str(math.degrees(bearing)) + "\n")
 
 	i=i+1
