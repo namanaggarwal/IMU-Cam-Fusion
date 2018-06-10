@@ -19,7 +19,7 @@ bus.write_byte_data(0x1E, 0x00, 0x60)
 #		0x00(00)	Continuous measurement mode
 bus.write_byte_data(0x1E, 0x02, 0x00)
 
-time.sleep(0.5)
+#time.sleep(0.5)
 
 # HMC5883 address, 0x1E(30)
 # Read data back from 0x03(03), 6 bytes
