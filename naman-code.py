@@ -117,7 +117,7 @@ while(1):
 	img = cv.QueryFrame(capture)
 	cv.ShowImage("camera", img)
 	cv.SaveImage('pic{:>05}.jpg'.format(i), img)
-	camera.write("Image "+ str(i)+ ": " +  str(ti_camera - t0) + " s \n ")
+	#camera.write("Image "+ str(i)+ ": " +  str(ti_camera - t0) + " s \n ")
 	if cv.WaitKey(1) == 27:
 		break
 
