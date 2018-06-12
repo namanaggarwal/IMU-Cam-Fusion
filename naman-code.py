@@ -49,7 +49,7 @@ bus.write_byte_data(address, power_mgmt_1, 0)
 
 t0 = time.time()
 data_.write("Computer Time: " + str(t0) + "\n")
-data_.write("Computer_Time (time_elapse_epoch), timestamp (sec), Image Number, camera_capture_time (sec), ax,AccelX (m/s2), ay,AccelY (m/s2), az,AccelZ (m/s2), gx, GyroX (Rad/s), gy, GyroY (Rad/), gz, GyroZ Rad/s, MagX (Gauss), MagY(Gauss), MagZ (Gauss), Bearing\n")
+data_.write("Computer_Time (time_elapse_epoch), timestamp (sec), Image Number, camera_capture_time (sec), ax,AccelX (m/s2), ay,AccelY (m/s2), az,AccelZ (m/s2), gx, GyroX (Rad/s), gy, GyroY (Rad/), gz, GyroZ Rad/s, MagX (Gauss), MagY(Gauss), MagZ (Gauss), Bearing (deg), Roll (deg), Pitch (deg) \n")
 
 #CAMERA CODE
 cv.NamedWindow("camera", 1)
@@ -87,6 +87,9 @@ while(1):
 	print "accel_yout: ", accel_yout, " scaled: ", (accel_yout/16384.)
 	print "accel_zout: ", accel_zout, " scaled: ", (accel_zout/16384.)
 	print
+	
+	roll = math.degrees(math.atan(-accel_xout/accel_zout))
+	pitch = math.degrees(math.atan(accel_yout/sqrt(accel_xout*accel_xout + accel_zout*accel_zout))
 
 	# print mag values
 	print"magnetometer data"
@@ -120,9 +123,10 @@ while(1):
 	#camera.write("Image "+ str(i)+ ": " +  str(ti_camera - t0) + " s \n ")
 	if cv.WaitKey(1) == 27:
 		break
-
+		
+# WRITING DATA TO A TEXT FILE
 	data_.write(str(ti) + ", " +str(timestamp) + ", " + str("Image " + str(i)) + "," + str(ti_camera - t0) + ","+ str(accel_xout) + ", " + str(accel_xout/16384.) + ", " + str(accel_yout) + ", " + str(accel_yout/16384.) + ", " + str(accel_zout)+ ", " + str(accel_zout/16384.) + ", " 
 		+ str(gyro_xout)+ ", " + str(gyro_xout/131.)+ ", " + str(gyro_yout)+ ", " + str(gyro_yout/131.)+ ", " + str(gyro_zout)+ ", " + str(gyro_zout/131.)+ ", " 
-		+ str(xMag)+ ", " + str(yMag)+ ", " + str(zMag) + ", " + str(math.degrees(bearing)) + "\n")
+		+ str(xMag)+ ", " + str(yMag)+ ", " + str(zMag) + ", " + str(math.degrees(bearing)) + "," + str(roll) + "," + str(pitch) + "\n")
 
 	i=i+1
